@@ -12,7 +12,7 @@ directories as shown in the repository.
 
 The locations are for Debian Wheezy with Zabbix 2.4.x installed.
 
-######"Template App CUPS.xml"
+######"Template_App_CUPS.xml"
     -> Import this template on your Zabbix server and assign it to your
        monitored CUPS servers
 
