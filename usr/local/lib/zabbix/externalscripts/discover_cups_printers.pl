@@ -1,5 +1,5 @@
 #!/bin/bash
-printers=`lpstat -p | grep printer | cut -f2 -d ' '`
+printers=`lpstat -p | grep "^printer" | cut -f2 -d ' '`
 # printers=$(($printers-1))
 isfirst=1
 echo "{"
