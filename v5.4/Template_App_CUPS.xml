@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.4</version>
-    <date>2022-01-31T18:16:03Z</date>
+    <date>2022-01-31T18:25:20Z</date>
     <groups>
         <group>
             <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
@@ -26,7 +26,6 @@
                     <type>ZABBIX_ACTIVE</type>
                     <key>net.tcp.listen[631]</key>
                     <delay>120</delay>
-                    <history>7d</history>
                     <valuemap>
                         <name>Service state</name>
                     </valuemap>
@@ -51,6 +50,7 @@
                     <type>ZABBIX_ACTIVE</type>
                     <key>proc.mem[cupsd]</key>
                     <delay>120</delay>
+                    <history>400d</history>
                     <tags>
                         <tag>
                             <tag>Application</tag>
@@ -64,7 +64,6 @@
                     <type>ZABBIX_ACTIVE</type>
                     <key>proc.num[cupsd]</key>
                     <delay>120</delay>
-                    <history>7d</history>
                     <tags>
                         <tag>
                             <tag>Application</tag>

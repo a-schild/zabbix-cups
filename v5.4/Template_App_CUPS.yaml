@@ -1,6 +1,6 @@
 zabbix_export:
   version: '5.4'
-  date: '2022-01-31T18:15:56Z'
+  date: '2022-01-31T18:24:17Z'
   groups:
     -
       uuid: 7df96b18c230490a9a0a9e2307226338
@@ -21,7 +21,6 @@ zabbix_export:
           type: ZABBIX_ACTIVE
           key: 'net.tcp.listen[631]'
           delay: '120'
-          history: 7d
           valuemap:
             name: 'Service state'
           tags:
@@ -40,6 +39,7 @@ zabbix_export:
           type: ZABBIX_ACTIVE
           key: 'proc.mem[cupsd]'
           delay: '120'
+          history: 400d
           tags:
             -
               tag: Application
@@ -50,7 +50,6 @@ zabbix_export:
           type: ZABBIX_ACTIVE
           key: 'proc.num[cupsd]'
           delay: '120'
-          history: 7d
           tags:
             -
               tag: Application

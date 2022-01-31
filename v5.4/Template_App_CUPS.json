@@ -1,7 +1,7 @@
 {
     "zabbix_export": {
         "version": "5.4",
-        "date": "2022-01-31T18:15:42Z",
+        "date": "2022-01-31T18:25:28Z",
         "groups": [
             {
                 "uuid": "7df96b18c230490a9a0a9e2307226338",
@@ -26,7 +26,6 @@
                         "type": "ZABBIX_ACTIVE",
                         "key": "net.tcp.listen[631]",
                         "delay": "120",
-                        "history": "7d",
                         "valuemap": {
                             "name": "Service state"
                         },
@@ -51,6 +50,7 @@
                         "type": "ZABBIX_ACTIVE",
                         "key": "proc.mem[cupsd]",
                         "delay": "120",
+                        "history": "400d",
                         "tags": [
                             {
                                 "tag": "Application",
@@ -64,7 +64,6 @@
                         "type": "ZABBIX_ACTIVE",
                         "key": "proc.num[cupsd]",
                         "delay": "120",
-                        "history": "7d",
                         "tags": [
                             {
                                 "tag": "Application",
