@@ -1,0 +1,127 @@
+zabbix_export:
+  version: '5.4'
+  date: '2022-01-31T18:24:17Z'
+  groups:
+    -
+      uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    -
+      uuid: 8529d4c7d69546dfa814359f06b625fe
+      template: 'Template App CUPS'
+      name: 'Template App CUPS'
+      description: 'Monitor CUPS servers, printers and queues via zabbix active agent'
+      groups:
+        -
+          name: Templates
+      items:
+        -
+          uuid: 73e659cac591417a84b3dc38732cc98e
+          name: 'TCP port $1 listening state'
+          type: ZABBIX_ACTIVE
+          key: 'net.tcp.listen[631]'
+          delay: '120'
+          valuemap:
+            name: 'Service state'
+          tags:
+            -
+              tag: Application
+              value: CUPS
+          triggers:
+            -
+              uuid: 8ad0732c5ccd4af4ad0ef0d8ee51df59
+              expression: 'last(/Template App CUPS/net.tcp.listen[631])=0'
+              name: 'CUPS port not listening on {HOST.NAME}'
+              priority: AVERAGE
+        -
+          uuid: 7dec3977b5434ee88137895a240d9956
+          name: 'Used memory of $1'
+          type: ZABBIX_ACTIVE
+          key: 'proc.mem[cupsd]'
+          delay: '120'
+          history: 400d
+          tags:
+            -
+              tag: Application
+              value: CUPS
+        -
+          uuid: e6cc9745b4da4c6694e0257f4674e8c7
+          name: 'Number of $1 processes'
+          type: ZABBIX_ACTIVE
+          key: 'proc.num[cupsd]'
+          delay: '120'
+          tags:
+            -
+              tag: Application
+              value: CUPS
+          triggers:
+            -
+              uuid: 7a259c07412e48fab98b4fb7152cd779
+              expression: 'last(/Template App CUPS/proc.num[cupsd])=0'
+              name: 'No cupsd process running on {HOST.NAME}'
+              priority: AVERAGE
+      discovery_rules:
+        -
+          uuid: c5fbf614c1fd4628bd910b4786b42702
+          name: 'Discover CUPS Printers'
+          type: ZABBIX_ACTIVE
+          key: cups.discover.printers
+          delay: '900'
+          description: |
+            Discover CUPS printers available on local system.
+            Rediscover every 15 minutes
+          item_prototypes:
+            -
+              uuid: eef070ecd9664dc996b300da0bebd935
+              name: 'Printer status {#PRINTER}'
+              type: ZABBIX_ACTIVE
+              key: 'cups.printer.status[{#PRINTER}]'
+              delay: '120'
+              trends: '0'
+              value_type: TEXT
+              description: 'Poll printer status every 2 minutes'
+              tags:
+                -
+                  tag: Application
+                  value: CUPS
+              trigger_prototypes:
+                -
+                  uuid: d66872f2c4e74dd5b564b64802083a28
+                  expression: 'find(/Template App CUPS/cups.printer.status[{#PRINTER}],1s,"like","disabled")=1'
+                  name: 'CUPS printer {#PRINTER} disabled'
+                  priority: WARNING
+                -
+                  uuid: 1b47fb4a8609446eb5ad2a1c9021e247
+                  expression: 'find(/Template App CUPS/cups.printer.status[{#PRINTER}],1s,"like","paused")=1'
+                  name: 'CUPS printer {#PRINTER} paused'
+                  priority: WARNING
+            -
+              uuid: 7682642c3d3f4477912c54ac06d24af6
+              name: 'Printqueue status {#PRINTER}'
+              type: ZABBIX_ACTIVE
+              key: 'cups.printqueue.status[{#PRINTER}]'
+              delay: '120'
+              trends: '0'
+              value_type: TEXT
+              description: 'Poll printqueue status every 2 minutes'
+              tags:
+                -
+                  tag: Application
+                  value: CUPS
+              trigger_prototypes:
+                -
+                  uuid: a6d043fc62774af5968c2fd668b21701
+                  expression: 'find(/Template App CUPS/cups.printqueue.status[{#PRINTER}],1s,"like","accepting requests")=0'
+                  name: 'CUPS printqueue {#PRINTER} not accepting jobs'
+                  priority: HIGH
+      valuemaps:
+        -
+          uuid: 5dbfbb3ebb6646ffb6ff74a7279f8ea6
+          name: 'Service state'
+          mappings:
+            -
+              value: '0'
+              newvalue: Down
+            -
+              value: '1'
+              newvalue: Up
